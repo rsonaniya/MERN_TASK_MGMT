@@ -23,7 +23,7 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, user } = useSelector((state) => state.user);
+  const { loading, user } = useSelector((state) => state.user);
   const onSubmit = async (data) => {
     dispatch(signUp(data))
       .unwrap()
@@ -35,7 +35,9 @@ const SignUpPage = () => {
         toast.error(err);
       });
   };
-  console.log("user", loading, user, error);
+  if (user) {
+    navigate("/");
+  }
   return (
     <Container maxWidth="xs">
       <Box
@@ -127,8 +129,9 @@ const SignUpPage = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
-            Sign Up
+            {loading ? "Signing Up, Please Wait !" : "Sign Up"}
           </Button>
           <Grid2 container>
             <Grid2 item>

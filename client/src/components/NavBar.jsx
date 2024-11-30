@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/userSlice";
 
 export default function NavBar() {
-  const { user } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   return (
@@ -28,8 +28,9 @@ export default function NavBar() {
                 color="success"
                 endIcon={<LogoutIcon />}
                 onClick={() => dispatch(logout())}
+                disabled={loading}
               >
-                Logout
+                {loading ? "Logging You Out" : "Log Out"}
               </Button>
             </Link>
           ) : (
@@ -38,8 +39,9 @@ export default function NavBar() {
                 variant="contained"
                 color="success"
                 startIcon={<LoginIcon />}
+                disabled={loading}
               >
-                Log In
+                {loading ? "Logging You In" : "Log In"}
               </Button>
             </Link>
           )}

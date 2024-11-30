@@ -11,7 +11,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../features/tasksSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +24,7 @@ const CreateTask = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading } = useSelector((state) => state.tasks);
 
   const onSubmit = async (data) => {
     await dispatch(addTask(data));
@@ -121,8 +122,9 @@ const CreateTask = () => {
           variant="contained"
           color="primary"
           sx={{ mt: 2 }}
+          disabled={loading}
         >
-          Create Task
+          {loading ? "Creating Task, Please Wait!" : "Create Task"}
         </Button>
       </Box>
     </Container>

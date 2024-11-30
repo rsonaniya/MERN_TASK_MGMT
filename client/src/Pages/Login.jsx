@@ -9,7 +9,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/userSlice";
 
 const LoginPage = () => {
@@ -20,6 +20,7 @@ const LoginPage = () => {
   } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading, user } = useSelector((state) => state.user);
 
   const onSubmit = async (data) => {
     dispatch(login(data))
@@ -32,7 +33,9 @@ const LoginPage = () => {
         toast.error(err);
       });
   };
-
+  if (user) {
+    navigate("/");
+  }
   return (
     <Container maxWidth="xs">
       <Box
@@ -90,8 +93,9 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging You In, Please Wait!" : "Log In"}
           </Button>
           <Grid2 container>
             <Grid2 item>
