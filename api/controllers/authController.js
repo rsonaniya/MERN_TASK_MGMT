@@ -10,7 +10,7 @@ function signToken(user, res) {
     .status(200)
     .cookie("token", token, {
       httpOnly: true,
-      sameSite: "Lax",
+      sameSite: "None",
       secure: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
